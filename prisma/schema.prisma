@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id                   String                 @id @default(uuid())
+  name                 String?
+  email                String                 @unique
+  password             String
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  likedWallpapers      LikedWallpapers[]
+  bookmarkedWallpapers BookmarkedWallpapers[]
+}
+
+model Artists {
+  id         String       @id @default(uuid())
+  clerkId    String       @unique
+  name       String?
+  email      String       @unique
+  mobileNo   String?      @unique
+  gender     Gender?
+  country    String?
+  role       Role         @default(ARTIST)
+  isVerified Boolean      @default(false)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  wallpapers Wallpapers[]
+}
+
+model Wallpapers {
+  id                   String                 @id @default(uuid())
+  title                String?
+  imageUrl             String?
+  likes                Int                    @default(0)
+  platform             Platform?
+  categoriesId         String
+  categories           Categories             @relation(fields: [categoriesId], references: [id], onDelete: Cascade)
+  artistsId            String
+  artists              Artists                @relation(fields: [artistsId], references: [id], onDelete: Cascade)
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  likedWallpapers      LikedWallpapers[]
+  bookmarkedWallpapers BookmarkedWallpapers[]
+}
+
+model LikedWallpapers {
+  id          String     @id @default(uuid())
+  userId      String
+  users       Users      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wallpaperId String
+  wallpapers  Wallpapers @relation(fields: [wallpaperId], references: [id], onDelete: Cascade)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model BookmarkedWallpapers {
+  id          String     @id @default(uuid())
+  userId      String
+  users       Users      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wallpaperId String
+  wallpapers  Wallpapers @relation(fields: [wallpaperId], references: [id], onDelete: Cascade)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Categories {
+  id         String       @id @default(uuid())
+  name       String?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  wallpapers Wallpapers[]
+}
+
+enum Platform {
+  MOBILE
+  TABLET
+  DESKTOP
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum Role {
+  ARTIST
+  ADMIN
+}
