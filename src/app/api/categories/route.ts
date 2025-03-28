@@ -1,9 +1,8 @@
 import {NextResponse} from "next/server";
-import {PrismaClient} from "@prisma/client";
+import prisma from "@/lib/prisma"
 
 export async function GET() {
     try {
-        const prisma = new PrismaClient();
         const categories = await prisma.categories.findMany({
             select: {
                 id: true,
@@ -11,7 +10,7 @@ export async function GET() {
             },
         });
 
-        return NextResponse.json({categories});
+        return NextResponse.json(categories);
     } catch (error) {
         console.error("Error fetching categories:", error);
         const errorMessage = error instanceof Error ? error.message : "Something went wrong";

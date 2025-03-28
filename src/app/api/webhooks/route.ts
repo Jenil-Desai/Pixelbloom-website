@@ -3,7 +3,7 @@ import {NextResponse} from "next/server";
 import {Webhook} from "svix";
 import {logger} from "@/utils/logger";
 import {headers} from "next/headers";
-import {PrismaClient} from "@prisma/client";
+import prisma from "@/lib/prisma"
 
 export async function POST(req: Request) {
     try {
@@ -46,8 +46,6 @@ export async function POST(req: Request) {
             logger.error("[SERVER]: Error: No user ID provided in webhook data");
             return NextResponse.json({error: "No user ID provided"}, {status: 400});
         }
-
-        const prisma = new PrismaClient();
 
         try {
             switch (evt.type) {

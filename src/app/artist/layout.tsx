@@ -1,22 +1,15 @@
-import AppSidebar from "@/components/global/sidebar/Sidebar";
-import { Separator } from "@/components/ui/separator";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import {SidebarInset, SidebarProvider} from "@/components/ui/sidebar";
+import ArtistSidebar from "@/components/globals/sidebar/Sidebar";
+import DashboardHeader from "@/components/globals/header/DashboardHeader";
 
-export default function ArtistLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-          <SidebarTrigger />
-          <Separator orientation="vertical" className="mr-2" />
-        </header>
-        <main className="p-2">{children}</main>
-      </SidebarInset>
-    </SidebarProvider>
-  );
+export default function ArtistLayout({children}: Readonly<{ children: React.ReactNode; }>) {
+    return (
+        <SidebarProvider>
+            <ArtistSidebar/>
+            <SidebarInset>
+                <DashboardHeader/>
+                <main className="p-2">{children}</main>
+            </SidebarInset>
+        </SidebarProvider>
+    );
 }

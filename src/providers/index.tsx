@@ -2,11 +2,14 @@
 
 import {ClerkProvider} from "@clerk/nextjs";
 import {ReactQueryClientProvider} from "./ReactQueryClientProvider";
+import {Provider} from "jotai";
 
 export default function Providers({children}: Readonly<{ children: React.ReactNode; }>) {
     return (
-        <ClerkProvider>
-            <ReactQueryClientProvider>{children}</ReactQueryClientProvider>;
-        </ClerkProvider>
+        <Provider>
+            <ClerkProvider>
+                <ReactQueryClientProvider>{children}</ReactQueryClientProvider>;
+            </ClerkProvider>
+        </Provider>
     );
 }
