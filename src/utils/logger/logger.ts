@@ -6,7 +6,7 @@ enum LogLevel {
     SUCCESS = "success",
 }
 
-const log = (level: LogLevel, message: string) => {
+const log = (level: LogLevel, message: string, ...args: any[]) => {
     let color = chalk.gray;
 
     switch (level) {
@@ -22,11 +22,11 @@ const log = (level: LogLevel, message: string) => {
     }
 
     const timestamp = new Date().toISOString();
-    console.log(color(`[${timestamp}] ${level.toUpperCase()}: ${message}`));
+    console.log(color(`[${timestamp}] ${level.toUpperCase()}: ${message}`), ...args);
 };
 
 export const logger = {
-    error: (message: string) => log(LogLevel.ERROR, message),
-    info: (message: string) => log(LogLevel.INFO, message),
-    success: (message: string) => log(LogLevel.SUCCESS, message),
+    error: (message: string, ...args: any[]) => log(LogLevel.ERROR, message, ...args),
+    info: (message: string, ...args: any[]) => log(LogLevel.INFO, message, ...args),
+    success: (message: string, ...args: any[]) => log(LogLevel.SUCCESS, message, ...args),
 };
