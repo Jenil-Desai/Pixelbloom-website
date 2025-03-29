@@ -9,4 +9,9 @@ declare global {
             artistsId: string;
         };
     }
+
+    interface UserPublicMetadata {
+        role?: Roles;
+        artistsId: string;
+    }
 }

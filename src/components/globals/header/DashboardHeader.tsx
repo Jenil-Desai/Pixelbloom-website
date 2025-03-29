@@ -16,7 +16,7 @@ export default function DashboardHeader() {
                 <Breadcrumbs items={currentPageBreadcrumb}/>
             </div>
             <div className={"flex items-center"}>
-                <UserButton/>
+                <UserButton showName={true}/>
             </div>
         </header>
     )

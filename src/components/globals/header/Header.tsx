@@ -1,7 +1,7 @@
 "use client";
-import {useAuth, UserButton} from "@clerk/nextjs";
+import {useAuth, UserButton, useUser} from "@clerk/nextjs";
 import {useRouter} from "next/navigation";
-import {Menu, X} from "lucide-react";
+import {LayoutDashboard, Menu, X} from "lucide-react";
 import {useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,6 +14,7 @@ export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const hideHeader = useHide({pathname: ["/admin", "/artist"]});
     const {isSignedIn} = useAuth();
+    const {user} = useUser();
     const router = useRouter();
 
     if (hideHeader) return null;
@@ -40,7 +41,12 @@ export default function Header() {
 
                 {isSignedIn ? (
                     <div className="hidden md:flex items-center gap-4">
-                        <UserButton showName appearance={{layout: {animations: true}}}/>
+                        <UserButton showName appearance={{layout: {animations: true}}}>
+                            <UserButton.MenuItems>
+                                <UserButton.Action label={"Dashboard"} labelIcon={<LayoutDashboard size={14}/>}
+                                                   onClick={() => router.push(user?.publicMetadata.role == "ADMIN" ? "/admin" : "/artist")}/>
+                            </UserButton.MenuItems>
+                        </UserButton>
                     </div>
                 ) : (
                     <div className="hidden md:flex items-center gap-4">

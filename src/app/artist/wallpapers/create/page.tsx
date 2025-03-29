@@ -21,7 +21,7 @@ export default function AdminNewUserPage() {
         <PageContainer scrollable>
             <div className="space-y-4">
                 <div className="flex items-start justify-between">
-                    <Heading title={`Create New Wallpaper`} description="Add Details For New Wallpaper"/>
+                    <Heading title={`Upload New Wallpaper`} description="Add Details For New Wallpaper"/>
                 </div>
                 <Separator/>
                 <CreateWallpaperForm/>

@@ -13,6 +13,8 @@ import {Card, CardContent} from "@/components/ui/card";
 import {useState} from "react";
 import CreateWallpaperFormSkeleton from "@/app/artist/wallpapers/create/skeleton";
 import {toast} from "sonner";
+import uploadWallpaper from "@/actions/uploadWallpaper";
+import Image from "next/image";
 
 export default function CreateWallpaperForm() {
     const [preview, setPreview] = useState<string | null>(null);
@@ -32,7 +34,26 @@ export default function CreateWallpaperForm() {
     });
 
     const onSubmit = async (data: CreateWallpaperInput) => {
-        console.log(data);
+        const formData = new FormData();
+
+        formData.append("title", data.title);
+        formData.append("platform", data.platform);
+        formData.append("categoriesId", data.categoriesId);
+        formData.append("file", data.file[0]);
+
+        const res = await uploadWallpaper(formData);
+
+        if (res.success) {
+            toast.success("Success", {
+                description: "Wallpaper Uploaded Successfully",
+                dismissible: true,
+            })
+        } else {
+            toast.error("Error", {
+                description: "Something went wrong",
+                dismissible: true,
+            });
+        }
     };
 
     if (isError) {
@@ -138,6 +159,7 @@ export default function CreateWallpaperForm() {
                                                         }
                                                         field.onChange(event.target.files);
                                                     }}
+                                                    accept={"image/*"}
                                                 />
                                             </FormControl>
                                             <FormMessage/>
@@ -154,7 +176,8 @@ export default function CreateWallpaperForm() {
             </Card>
             {preview && (
                 <Card className={"w-full p-4"}>
-                    <img src={preview} alt="Preview" className="w-full h-full rounded-lg"/>
+                    <Image src={preview} alt="Preview" width={100} height={100}
+                           className="w-full h-full rounded-lg"/>
                 </Card>
             )}
         </div>

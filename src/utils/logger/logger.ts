@@ -6,7 +6,7 @@ enum LogLevel {
     SUCCESS = "success",
 }
 
-const log = (level: LogLevel, message: string, ...args: any[]) => {
+const log = (level: LogLevel, message: string, ...args: unknown[]) => {
     let color = chalk.gray;
 
     switch (level) {
@@ -26,7 +26,7 @@ const log = (level: LogLevel, message: string, ...args: any[]) => {
 };
 
 export const logger = {
-    error: (message: string, ...args: any[]) => log(LogLevel.ERROR, message, ...args),
-    info: (message: string, ...args: any[]) => log(LogLevel.INFO, message, ...args),
-    success: (message: string, ...args: any[]) => log(LogLevel.SUCCESS, message, ...args),
+    error: (message: string, ...args: unknown[]) => log(LogLevel.ERROR, message, ...args),
+    info: (message: string, ...args: unknown[]) => log(LogLevel.INFO, message, ...args),
+    success: (message: string, ...args: unknown[]) => log(LogLevel.SUCCESS, message, ...args),
 };
