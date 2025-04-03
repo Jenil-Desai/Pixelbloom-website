@@ -15,9 +15,11 @@ import CreateWallpaperFormSkeleton from "@/app/artist/wallpapers/create/skeleton
 import {toast} from "sonner";
 import uploadWallpaper from "@/actions/uploadWallpaper";
 import Image from "next/image";
+import {useRouter} from "next/navigation";
 
 export default function CreateWallpaperForm() {
     const [preview, setPreview] = useState<string | null>(null);
+    const router = useRouter();
 
     const {isError, isPending, data} = useQuery<fetchCategoriesResponse[]>({
         queryKey: ["categories"],
@@ -48,6 +50,7 @@ export default function CreateWallpaperForm() {
                 description: "Wallpaper Uploaded Successfully",
                 dismissible: true,
             })
+            router.push("/artist/wallpapers");
         } else {
             toast.error("Error", {
                 description: "Something went wrong",
@@ -76,6 +79,7 @@ export default function CreateWallpaperForm() {
                                 <FormField
                                     name="title"
                                     control={form.control}
+                                    disabled={form.formState.isSubmitting}
                                     render={({field}) => (
                                         <FormItem>
                                             <FormLabel>Title</FormLabel>
@@ -92,6 +96,7 @@ export default function CreateWallpaperForm() {
                                     <FormField
                                         name="platform"
                                         control={form.control}
+                                        disabled={form.formState.isSubmitting}
                                         render={({field}) => (
                                             <FormItem>
                                                 <FormLabel>Platform</FormLabel>
@@ -117,6 +122,7 @@ export default function CreateWallpaperForm() {
                                     <FormField
                                         name="categoriesId"
                                         control={form.control}
+                                        disabled={form.formState.isSubmitting}
                                         render={({field}) => (
                                             <FormItem>
                                                 <FormLabel>Category</FormLabel>
@@ -146,6 +152,7 @@ export default function CreateWallpaperForm() {
                                 <FormField
                                     name="file"
                                     control={form.control}
+                                    disabled={form.formState.isSubmitting}
                                     render={({field}) => (
                                         <FormItem>
                                             <FormLabel>Upload File</FormLabel>
@@ -168,7 +175,8 @@ export default function CreateWallpaperForm() {
                                 />
                             </div>
 
-                            <Button type={"submit"} variant={"outline"} disabled={false}>Submit</Button>
+                            <Button type={"submit"} variant={"outline"}
+                                    disabled={form.formState.isSubmitting}>Submit</Button>
 
                         </CardContent>
                     </form>
