@@ -11,8 +11,8 @@ import {useState} from "react";
 import {toast} from "sonner";
 import Link from "next/link";
 
-import {signUpFormSchema, SignUpFormType} from "@/schemas/signUpFormSchema";
-import VerificationForm from "./verificationForm";
+import {signUpFormSchema, SignUpFormType} from "@/schemas/sign-up/signUpFormSchema";
+import VerificationForm from "@/sections/register/verificationForm";
 import {logger} from "@/utils/logger";
 
 export default function RegisterForm() {
@@ -21,7 +21,7 @@ export default function RegisterForm() {
     const {
         register,
         handleSubmit,
-        formState: {errors},
+        formState: {errors, isSubmitting},
     } = useForm<SignUpFormType>({
         resolver: zodResolver(signUpFormSchema),
         defaultValues: {
@@ -66,9 +66,9 @@ export default function RegisterForm() {
         <form className="p-6 md:p-8" onSubmit={onSubmit}>
             <div className="flex flex-col gap-6">
                 <div className="flex flex-col items-center text-center">
-                    <h1 className="text-2xl font-bold">Join PixelBloom Studio</h1>
-                    <p className="text-balance text-muted-foreground">Create an account to start managing your
-                        wallpapers</p>
+                    <h1 className="text-2xl font-bold">Create Your PixelBloom Account</h1>
+                    <p className="text-balance text-muted-foreground">Join our community of wallpaper artists and
+                        creators</p>
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="name">Name</Label>
@@ -88,9 +88,12 @@ export default function RegisterForm() {
                     {errors.password && <span className="text-red-500 text-xs">{errors.password.message}</span>}
                 </div>
                 <div id="clerk-captcha"></div>
-                <Button type="submit"
-                        className="w-full bg-gradient-to-r from-[#318BA9] to-[#E67E22] hover:from-[#2980B9] hover:to-[#D35400] text-white">
-                    Sign Up
+                <Button
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-[#318BA9] to-[#E67E22] hover:from-[#2980B9] hover:to-[#D35400] text-white"
+                    disabled={isSubmitting}
+                >
+                    {isSubmitting ? "Creating Account..." : "Create Account"}
                 </Button>
                 <div
                     className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">

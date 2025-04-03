@@ -7,11 +7,13 @@ declare global {
         metadata: {
             role?: Roles;
             artistsId: string;
+            onboardingComplete?: boolean
         };
     }
 
     interface UserPublicMetadata {
         role?: Roles;
         artistsId: string;
+        onboardingComplete?: boolean
     }
 }

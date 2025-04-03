@@ -62,9 +62,8 @@ export default function LoginForm() {
         <form className="p-6 md:p-8" onSubmit={onSubmit}>
             <div className="flex flex-col gap-6">
                 <div className="flex flex-col items-center text-center">
-                    <h1 className="text-2xl font-bold">Join PixelBloom Studio</h1>
-                    <p className="text-balance text-muted-foreground">Create an account to start managing your
-                        wallpapers</p>
+                    <h1 className="text-2xl font-bold">Welcome Back to PixelBloom Studio</h1>
+                    <p className="text-balance text-muted-foreground">Sign in to continue managing your wallpapers</p>
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="email">Email</Label>
@@ -80,7 +79,7 @@ export default function LoginForm() {
                 <div id="clerk-captcha"></div>
                 <Button type="submit"
                         className="w-full bg-gradient-to-r from-[#318BA9] to-[#E67E22] hover:from-[#2980B9] hover:to-[#D35400] text-white">
-                    Sign Up
+                    Login
                 </Button>
                 <div
                     className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">

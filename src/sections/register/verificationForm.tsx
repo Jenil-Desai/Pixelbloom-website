@@ -1,6 +1,6 @@
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {InputOTP, InputOTPGroup, InputOTPSlot} from "@/components/ui/input-otp";
-import {signUpVerifyFormSchema, SignUpVerifyFormType} from "@/schemas/signUpVerfiyFormSchema";
+import {signUpVerifyFormSchema, SignUpVerifyFormType} from "@/schemas/sign-up/signUpVerfiyFormSchema";
 import {SetActive, SignUpResource} from "@clerk/types";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {logger} from "@/utils/logger";

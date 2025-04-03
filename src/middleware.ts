@@ -1,17 +1,34 @@
 import {clerkMiddleware, createRouteMatcher} from "@clerk/nextjs/server";
 import {NextResponse} from "next/server";
 
+const isOnboardingRoute = createRouteMatcher(['/onboarding'])
 const isArtistRoute = createRouteMatcher(["/artist(.*)"]);
-
 const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
 
 export default clerkMiddleware(async (auth, request) => {
-    if (isAdminRoute(request) && (await auth()).sessionClaims?.metadata?.role !== "ADMIN") {
+    const {userId, sessionClaims} = await auth()
+
+    console.log(sessionClaims?.metadata.onboardingComplete)
+
+    // Handle protected routes when user is not authenticated
+    if (!userId && (isArtistRoute(request) || isAdminRoute(request))) {
+        const signInUrl = new URL('/sign-in', request.url);
+        return NextResponse.redirect(signInUrl);
+    }
+
+    // Check onboarding first
+    if (userId && !sessionClaims?.metadata?.onboardingComplete && !isOnboardingRoute(request)) {
+        const onboardingUrl = new URL('/onboarding', request.url)
+        return NextResponse.redirect(onboardingUrl)
+    }
+
+    // After onboarding is complete, check roles
+    if (isAdminRoute(request) && sessionClaims?.metadata.role !== "ADMIN") {
         const url = new URL("/", request.url);
         return NextResponse.redirect(url);
     }
 
-    if (isArtistRoute(request) && (await auth()).sessionClaims?.metadata?.role !== "ARTIST") {
+    if (isArtistRoute(request) && sessionClaims?.metadata.role !== "ARTIST") {
         const url = new URL("/", request.url);
         return NextResponse.redirect(url);
     }
@@ -21,9 +38,7 @@ export default clerkMiddleware(async (auth, request) => {
 
 export const config = {
     matcher: [
-        // Skip Next.js internals and all static files, unless found in search params
         "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-        // Always run for API routes
         "/(api|trpc)(.*)",
     ],
 };
