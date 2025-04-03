@@ -13,6 +13,7 @@ import {fetchArtistStatistics, fetchArtistStatisticsResponse} from "@/queryFn/fe
 import {toast} from "sonner";
 import {WallpaperCategoryChart} from "@/sections/artists-dashboard/WallpaperLikeCategoryChart";
 import {WallpaperCategoryCountChart} from "@/sections/artists-dashboard/WallpaperCountCategoryChart";
+import ArtistDashboardSkeleton from "@/app/artist/ArtistsDashboardSkeleton";
 
 export default function Page() {
     const setCurrentPageBreadcrumb = useSetAtom(currentPageBreadcrumbState);
@@ -36,7 +37,7 @@ export default function Page() {
         return;
     }
 
-    if (isPending) return null;
+    if (isPending) return <ArtistDashboardSkeleton/>;
 
     return (
         <PageContainer scrollable>
