@@ -8,8 +8,6 @@ const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
 export default clerkMiddleware(async (auth, request) => {
     const {userId, sessionClaims} = await auth()
 
-    console.log(sessionClaims?.metadata.onboardingComplete)
-
     // Handle protected routes when user is not authenticated
     if (!userId && (isArtistRoute(request) || isAdminRoute(request))) {
         const signInUrl = new URL('/sign-in', request.url);
