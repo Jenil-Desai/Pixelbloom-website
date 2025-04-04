@@ -21,12 +21,12 @@ export default clerkMiddleware(async (auth, request) => {
     }
 
     // After onboarding is complete, check roles
-    if (isAdminRoute(request) && sessionClaims?.metadata.role !== "ADMIN") {
+    if (isAdminRoute(request) && sessionClaims?.metadata.role != "ADMIN") {
         const url = new URL("/", request.url);
         return NextResponse.redirect(url);
     }
 
-    if (isArtistRoute(request) && sessionClaims?.metadata.role !== "ARTIST") {
+    if (isArtistRoute(request) && sessionClaims?.metadata.role != "ARTIST") {
         const url = new URL("/", request.url);
         return NextResponse.redirect(url);
     }

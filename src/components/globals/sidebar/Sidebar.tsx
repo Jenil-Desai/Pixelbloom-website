@@ -1,11 +1,11 @@
 import {Sidebar, SidebarContent, SidebarFooter, SidebarHeader} from "@/components/ui/sidebar";
 import Image from "next/image";
 import {NavMain} from "./NavMain";
-import {artistSidebarLinks} from "./artistSidebarLinks";
+import {SidebarLink} from "./artistSidebarLinks";
 import {SignOutButton} from "@clerk/nextjs";
 import {LogOut} from "lucide-react";
 
-export default function ArtistSidebar() {
+export default function DashboardSidebar({sidebarLinks}: { sidebarLinks: SidebarLink[] }) {
     return (
         <Sidebar>
             <SidebarHeader className={"border-b"}>
@@ -15,7 +15,7 @@ export default function ArtistSidebar() {
                 </div>
             </SidebarHeader>
             <SidebarContent>
-                <NavMain items={artistSidebarLinks}/>
+                <NavMain items={sidebarLinks}/>
             </SidebarContent>
             <SidebarFooter className={"border-t"}>
                 <div className="flex items-center justify-center mb-2 cursor-pointer">

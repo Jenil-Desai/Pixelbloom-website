@@ -1,32 +1,32 @@
 "use client";
 
+import {useSetAtom} from "jotai/index";
 import {currentPageBreadcrumbState} from "@/store";
-import {useSetAtom} from "jotai";
 import {useEffect} from "react";
 import {Heading} from "@/components/globals/Heading";
 import {Separator} from "@/components/ui/separator";
 import PageContainer from "@/components/layout/PageContainer";
-import {useUser} from "@clerk/nextjs";
+import Account from "@/sections/account/Account";
 
 export default function Page() {
     const setCurrentPageBreadcrumb = useSetAtom(currentPageBreadcrumbState);
-    const {user} = useUser();
 
     useEffect(() => {
-        setCurrentPageBreadcrumb([{title: "Dashboard", link: "/admin"}])
+        setCurrentPageBreadcrumb([
+            {title: "Dashboard", link: "/admin"},
+            {title: "Account", link: "/admin/account"}
+        ])
     }, [setCurrentPageBreadcrumb]);
-
-    if (!user) return null;
 
     return (
         <PageContainer scrollable>
             <div className="space-y-4">
                 <div className="flex items-start justify-between">
-                    <Heading title={user.fullName as string} description="👋🏻 Welcome Back, Admins!"/>
+                    <Heading title={`Account`} description="Your Personal Details"/>
                 </div>
                 <Separator/>
-                <div className={"grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"}></div>
+                <Account/>
             </div>
         </PageContainer>
-    );
+    )
 }

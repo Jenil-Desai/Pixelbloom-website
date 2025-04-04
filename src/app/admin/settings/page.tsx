@@ -1,32 +1,37 @@
 "use client";
 
+import {useSetAtom} from "jotai/index";
 import {currentPageBreadcrumbState} from "@/store";
-import {useSetAtom} from "jotai";
 import {useEffect} from "react";
 import {Heading} from "@/components/globals/Heading";
 import {Separator} from "@/components/ui/separator";
 import PageContainer from "@/components/layout/PageContainer";
-import {useUser} from "@clerk/nextjs";
+import {Clock} from "lucide-react";
 
 export default function Page() {
     const setCurrentPageBreadcrumb = useSetAtom(currentPageBreadcrumbState);
-    const {user} = useUser();
 
     useEffect(() => {
-        setCurrentPageBreadcrumb([{title: "Dashboard", link: "/admin"}])
+        setCurrentPageBreadcrumb([
+            {title: "Dashboard", link: "/admin"},
+            {title: "Settings", link: "/admin/settings"}
+        ])
     }, [setCurrentPageBreadcrumb]);
-
-    if (!user) return null;
 
     return (
         <PageContainer scrollable>
             <div className="space-y-4">
                 <div className="flex items-start justify-between">
-                    <Heading title={user.fullName as string} description="👋🏻 Welcome Back, Admins!"/>
+                    <Heading title={`Settings`} description="Your Profile, Your Control"/>
                 </div>
                 <Separator/>
-                <div className={"grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"}></div>
+                <div className="col-span-3 flex justify-center items-center h-screen">
+                    <div className={"flex flex-col items-center gap-4"}>
+                        <Clock size={100} className={"text-gray-500"}/>
+                        <p className="text-gray-500">Coming Soon.</p>
+                    </div>
+                </div>
             </div>
         </PageContainer>
-    );
+    )
 }

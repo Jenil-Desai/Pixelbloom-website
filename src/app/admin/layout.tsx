@@ -1,12 +1,12 @@
 import {SidebarInset, SidebarProvider} from "@/components/ui/sidebar";
 import DashboardSidebar from "@/components/globals/sidebar/Sidebar";
 import DashboardHeader from "@/components/globals/header/DashboardHeader";
-import {artistSidebarLinks} from "@/components/globals/sidebar/artistSidebarLinks";
+import {adminSidebarLinks} from "@/components/globals/sidebar/adminSidebarLinks";
 
-export default function ArtistLayout({children}: Readonly<{ children: React.ReactNode; }>) {
+export default function AdminLayout({children}: Readonly<{ children: React.ReactNode; }>) {
     return (
         <SidebarProvider>
-            <DashboardSidebar sidebarLinks={artistSidebarLinks}/>
+            <DashboardSidebar sidebarLinks={adminSidebarLinks}/>
             <SidebarInset>
                 <DashboardHeader/>
                 <main className="p-2">{children}</main>

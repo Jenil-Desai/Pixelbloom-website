@@ -1,14 +1,49 @@
 import WallpaperCard from "./WallpaperCard";
-import {useQuery} from "@tanstack/react-query";
-import {fetchWallpapers, fetchWallpapersResponse} from "@/queryFn/fetchWallpapers";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {ImageOff} from "lucide-react";
 import WallpaperSkeleton from "@/app/admin/my-wallpapers/skeleton";
+import {fetchAllWallpapers, fetchAllWallpapersResponse} from "@/queryFn/fetchAllWallpapers";
+import {deleteWallpaper} from "@/queryFn/deleteWallpaper";
 
 const WallpaperGrid = () => {
-    const {isError, isPending, data} = useQuery<fetchWallpapersResponse[]>({
+    const queryClient = useQueryClient();
+    const {isError, isPending, data} = useQuery<fetchAllWallpapersResponse[]>({
         queryKey: ["wallpapers"],
-        queryFn: fetchWallpapers,
+        queryFn: fetchAllWallpapers,
     });
+
+    const mutation = useMutation({
+        mutationFn: deleteWallpaper,
+        onMutate: async (wallpaperId) => {
+            // Cancel outgoing refetches
+            await queryClient.cancelQueries({queryKey: ["wallpapers"]});
+
+            // Snapshot the previous value
+            const previousWallpapers = queryClient.getQueryData<fetchAllWallpapersResponse[]>(["wallpapers"]);
+
+            // Optimistically update
+            queryClient.setQueryData<fetchAllWallpapersResponse[]>(["wallpapers"], (old) =>
+                old?.filter((wallpaper) => wallpaper.id !== wallpaperId)
+            );
+
+            return {previousWallpapers};
+        },
+        onError: (err, variables, context) => {
+            // Rollback on error
+            if (context?.previousWallpapers) {
+                queryClient.setQueryData(["wallpapers"], context.previousWallpapers);
+            }
+        },
+        onSettled: () => {
+            // Refetch after error or success
+            queryClient.invalidateQueries({queryKey: ["wallpapers"]});
+        },
+    });
+
+    // Pass handleDelete to WallpaperCard
+    const handleDelete = (id: string) => {
+        mutation.mutate(id);
+    };
 
     if (isError) {
         return (
@@ -25,7 +60,6 @@ const WallpaperGrid = () => {
         return <WallpaperSkeleton/>
     }
 
-
     return (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {data.length > 0 ? (
@@ -38,6 +72,7 @@ const WallpaperGrid = () => {
                         platform={wallpaper.platform}
                         category={wallpaper.categories.name}
                         likes={wallpaper.likes}
+                        onDelete={handleDelete}
                     />
                 ))
             ) : (
