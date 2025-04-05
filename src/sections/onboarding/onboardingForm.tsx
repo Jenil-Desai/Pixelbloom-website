@@ -2,7 +2,7 @@
 
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {onboardingFormSchema, OnboardingFormType} from "@/schemas/onboarding/onboardingFormSchema";
+import {onboardingSchema, OnboardingFormType} from "@/schemas/onboarding/onboardingSchema";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
@@ -15,7 +15,7 @@ import {useUser} from "@clerk/nextjs";
 
 export default function OnboardingForm() {
     const form = useForm<OnboardingFormType>({
-        resolver: zodResolver(onboardingFormSchema),
+        resolver: zodResolver(onboardingSchema),
         defaultValues: {
             mobileNumber: "",
             gender: "MALE",

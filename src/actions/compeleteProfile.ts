@@ -1,6 +1,6 @@
 "use server"
 
-import {OnboardingFormType} from "@/schemas/onboarding/onboardingFormSchema";
+import {OnboardingFormType} from "@/schemas/onboarding/onboardingSchema";
 import {auth, clerkClient} from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
 import {logger} from "@/utils/logger";

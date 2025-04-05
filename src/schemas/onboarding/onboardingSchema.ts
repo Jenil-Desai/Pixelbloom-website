@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-export const onboardingFormSchema = z.object({
+export const onboardingSchema = z.object({
     mobileNumber: z
         .string({
             required_error: "Mobile number is required",
@@ -23,4 +23,4 @@ export const onboardingFormSchema = z.object({
         }),
 });
 
-export type OnboardingFormType = z.infer<typeof onboardingFormSchema>;
+export type OnboardingFormType = z.infer<typeof onboardingSchema>;
