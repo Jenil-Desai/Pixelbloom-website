@@ -42,10 +42,6 @@ export const adminSidebarLinks: SidebarLink[] = [
                 title: "Artists",
                 url: "/admin/artists",
             },
-            {
-                title: "Create",
-                url: "/admin/artists/create",
-            },
         ],
     },
     {

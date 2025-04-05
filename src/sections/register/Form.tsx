@@ -73,18 +73,19 @@ export default function RegisterForm() {
                 <div className="grid gap-2">
                     <Label htmlFor="name">Name</Label>
                     <Input id="name" type="text" placeholder="John Doe"
-                           aria-invalid={!!errors.name} {...register("name")} />
+                           aria-invalid={!!errors.name} {...register("name")} disabled={isSubmitting}/>
                     {errors.name && <span className="text-red-500 text-xs">{errors.name.message}</span>}
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="email">Email</Label>
                     <Input id="email" type="email" placeholder="johndoe@example.com"
-                           aria-invalid={!!errors.email} {...register("email")} />
+                           aria-invalid={!!errors.email} {...register("email")} disabled={isSubmitting}/>
                     {errors.email && <span className="text-red-500 text-xs">{errors.email.message}</span>}
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="password">Password</Label>
-                    <Input id="password" type="password" aria-invalid={!!errors.password} {...register("password")} />
+                    <Input id="password" type="password" aria-invalid={!!errors.password} {...register("password")}
+                           disabled={isSubmitting}/>
                     {errors.password && <span className="text-red-500 text-xs">{errors.password.message}</span>}
                 </div>
                 <div id="clerk-captcha"></div>

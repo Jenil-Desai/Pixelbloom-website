@@ -19,7 +19,7 @@ export default function LoginForm() {
     const {
         register,
         handleSubmit,
-        formState: {errors},
+        formState: {errors, isSubmitting},
     } = useForm<SignInFormType>({
         resolver: zodResolver(signInFormSchema),
         defaultValues: {
@@ -68,16 +68,17 @@ export default function LoginForm() {
                 <div className="grid gap-2">
                     <Label htmlFor="email">Email</Label>
                     <Input id="email" type="email" placeholder="johndoe@example.com"
-                           aria-invalid={!!errors.email} {...register("email")} />
+                           aria-invalid={!!errors.email} {...register("email")} disabled={isSubmitting}/>
                     {errors.email && <span className="text-red-500 text-xs">{errors.email.message}</span>}
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="password">Password</Label>
-                    <Input id="password" type="password" aria-invalid={!!errors.password} {...register("password")} />
+                    <Input id="password" type="password" aria-invalid={!!errors.password} {...register("password")}
+                           disabled={isSubmitting}/>
                     {errors.password && <span className="text-red-500 text-xs">{errors.password.message}</span>}
                 </div>
                 <div id="clerk-captcha"></div>
-                <Button type="submit"
+                <Button type="submit" disabled={isSubmitting}
                         className="w-full bg-gradient-to-r from-[#318BA9] to-[#E67E22] hover:from-[#2980B9] hover:to-[#D35400] text-white">
                     Login
                 </Button>

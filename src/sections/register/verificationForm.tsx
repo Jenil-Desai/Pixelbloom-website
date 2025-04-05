@@ -66,7 +66,8 @@ export default function VerificationForm({isLoaded, signUp, setActive}: Verifica
                                 <FormItem>
                                     <FormLabel>One-Time Password</FormLabel>
                                     <FormControl>
-                                        <InputOTP maxLength={6} {...field}>
+                                        <InputOTP maxLength={6} {...field}
+                                                  onChange={(newValue) => newValue.length == 6 ? verifyArtistEmail({code: newValue}) : null}>
                                             <InputOTPGroup>
                                                 <InputOTPSlot index={0}/>
                                                 <InputOTPSlot index={1}/>

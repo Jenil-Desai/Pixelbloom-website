@@ -45,6 +45,7 @@ export default function CreateUserForm() {
                             <FormField
                                 name={"name"}
                                 control={form.control}
+                                disabled={form.formState.isSubmitting}
                                 render={({field}) => (
                                     <FormItem>
                                         <FormLabel>Name</FormLabel>
@@ -60,6 +61,7 @@ export default function CreateUserForm() {
                             <FormField
                                 name={"email"}
                                 control={form.control}
+                                disabled={form.formState.isSubmitting}
                                 render={({field}) => (
                                     <FormItem>
                                         <FormLabel>Email</FormLabel>
@@ -76,6 +78,7 @@ export default function CreateUserForm() {
                             <FormField
                                 name={"password"}
                                 control={form.control}
+                                disabled={form.formState.isSubmitting}
                                 render={({field}) => (
                                     <FormItem>
                                         <FormLabel>Password</FormLabel>
