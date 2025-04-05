@@ -18,8 +18,8 @@ model Users {
   name                 String?
   email                String                 @unique
   password             String
-  createdAt            DateTime               @default(now())
-  updatedAt            DateTime               @updatedAt
+  created_at           DateTime               @default(now())
+  updated_at           DateTime               @updatedAt
   likedWallpapers      LikedWallpapers[]
   bookmarkedWallpapers BookmarkedWallpapers[]
 }
