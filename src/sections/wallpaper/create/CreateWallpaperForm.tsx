@@ -35,13 +35,13 @@ export default function CreateWallpaperForm() {
         },
     });
 
-    const onSubmit = async (data: CreateWallpaperInput) => {
+    const onSubmit = async (submitedData: CreateWallpaperInput) => {
         const formData = new FormData();
 
-        formData.append("title", data.title);
-        formData.append("platform", data.platform);
-        formData.append("categoriesId", data.categoriesId);
-        formData.append("file", data.file[0]);
+        formData.append("title", submitedData.title);
+        formData.append("platform", submitedData.platform);
+        formData.append("categoriesId", submitedData.categoriesId);
+        formData.append("file", submitedData.file[0]);
 
         const res = await uploadWallpaper(formData);
 
