@@ -1,22 +1,39 @@
-import {LucideIcon} from "lucide-react";
+import {motion} from "framer-motion";
 
-type FeatureCardProps = {
-    title: string;
-    description: string;
-    Icon: LucideIcon;
-    iconBgColor: string;
-    iconColor: string;
-};
+type FeatureItemProps = {
+    feature: {
+        title: string;
+        description: string;
+        Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+        iconBgColor: string;
+        iconColor: string;
+    };
+    index: number;
+    isInView: boolean;
+}
 
-export default function FeatureCard({title, description, Icon, iconBgColor, iconColor}: FeatureCardProps) {
+// New feature item component with modern design
+export function FeatureItem({feature, index, isInView}: FeatureItemProps) {
     return (
-        <div
-            className="flex flex-col items-start space-y-3 rounded-xl border border-black/10 bg-black/5 p-6 backdrop-blur-sm">
-            <div className={`rounded-full p-3 ${iconBgColor}`}>
-                <Icon className={`h-6 w-6 ${iconColor}`}/>
+        <motion.div
+            initial={{opacity: 0, y: 20}}
+            animate={isInView ? {opacity: 1, y: 0} : {opacity: 0, y: 20}}
+            transition={{duration: 0.5, delay: 0.1 * index}}
+            className="flex gap-6 group"
+        >
+            <div
+                className={`flex-shrink-0 p-4 rounded-2xl ${feature.iconBgColor} group-hover:scale-110 transition-transform duration-300`}>
+                <feature.Icon className={`w-7 h-7 ${feature.iconColor}`}/>
             </div>
-            <h3 className="text-xl font-bold text-black">{title}</h3>
-            <p className="text-black/70">{description}</p>
-        </div>
+
+            <div>
+                <h3 className="text-xl font-semibold mb-2 text-zinc-900 group-hover:text-orange-600 transition-colors duration-300">
+                    {feature.title}
+                </h3>
+                <p className="text-zinc-600">
+                    {feature.description}
+                </p>
+            </div>
+        </motion.div>
     );
 }
