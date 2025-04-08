@@ -18,6 +18,7 @@ import Image from "next/image";
 import {useRouter} from "next/navigation";
 
 export default function CreateWallpaperForm() {
+    const [uploadFile, setUploadFile] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
     const router = useRouter();
 
@@ -38,10 +39,18 @@ export default function CreateWallpaperForm() {
     const onSubmit = async (submitedData: CreateWallpaperInput) => {
         const formData = new FormData();
 
+        if (!uploadFile) {
+            toast.error("Error", {
+                description: "Please select a file to upload",
+                dismissible: true,
+            });
+            return;
+        }
+
         formData.append("title", submitedData.title);
         formData.append("platform", submitedData.platform);
         formData.append("categoriesId", submitedData.categoriesId);
-        formData.append("file", submitedData.file[0]);
+        formData.append("file", uploadFile);
 
         const res = await uploadWallpaper(formData);
 
@@ -162,6 +171,7 @@ export default function CreateWallpaperForm() {
                                                     onChange={(event) => {
                                                         const file = event.target.files?.[0];
                                                         if (file) {
+                                                            setUploadFile(file);
                                                             setPreview(URL.createObjectURL(file));
                                                         }
                                                         field.onChange(event.target.files);
