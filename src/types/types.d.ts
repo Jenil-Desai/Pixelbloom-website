@@ -1,5 +1,7 @@
-export enum Platform {
-    MOBILE = "MOBILE",
-    DESKTOP = "DESKTOP",
-    TABLET = "TABLET"
+export namespace $Enums {
+    export const Platform: {
+        MOBILE: 'MOBILE', TABLET: 'TABLET', DESKTOP: 'DESKTOP'
+    };
+
+    export type Platform = (typeof Platform)[keyof typeof Platform]
 }

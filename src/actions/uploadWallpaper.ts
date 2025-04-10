@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import {currentUser} from "@clerk/nextjs/server";
 import {uploadToBucket} from "@/utils/uploadToBucket";
 import {logger} from "@/utils/logger";
-import {Platform} from "@/types/types";
+import {$Enums} from "@/types/types";
 
 export default async function uploadWallpaper(formData: FormData) {
     const user = await currentUser()
@@ -13,9 +13,9 @@ export default async function uploadWallpaper(formData: FormData) {
         return {error: "User not found"};
     }
 
-    const title = formData.get("title")?.toString();
-    const platform = formData.get("platform") as Platform;
-    const categoriesId = formData.get("categoriesId")?.toString();
+    const title = formData.get("title");
+    const platform = formData.get("platform");
+    const categoriesId = formData.get("categoriesId");
     const file = formData.get("file") as File;
 
     if (!title || !platform || !categoriesId || !file) {
@@ -35,9 +35,9 @@ export default async function uploadWallpaper(formData: FormData) {
     try {
         await prisma.wallpapers.create({
             data: {
-                title: title,
-                platform: platform,
-                categoriesId: categoriesId,
+                title: title.toString(),
+                platform: platform.toString() as $Enums.Platform,
+                categoriesId: categoriesId.toString(),
                 artistsId: user.publicMetadata.artistsId,
                 imageUrl: imageUrl,
             }

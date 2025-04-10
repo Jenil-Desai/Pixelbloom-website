@@ -47,10 +47,10 @@ export default function CreateWallpaperForm() {
             return;
         }
 
-        formData.append("title", submitedData.title);
-        formData.append("platform", submitedData.platform);
-        formData.append("categoriesId", submitedData.categoriesId);
-        formData.append("file", uploadFile);
+        formData.set("title", submitedData.title);
+        formData.set("platform", submitedData.platform);
+        formData.set("categoriesId", submitedData.categoriesId);
+        formData.set("file", uploadFile);
 
         const res = await uploadWallpaper(formData);
 
