@@ -4,6 +4,7 @@ import {motion, useInView} from "framer-motion";
 import {useRef} from "react";
 import Link from "next/link";
 import {STEPS} from "@/constants/howItWorksSteps";
+import Image from "next/image";
 
 export default function HowItWorks() {
     const ref = useRef(null);
@@ -57,17 +58,17 @@ export default function HowItWorks() {
                                 className="absolute inset-0 bg-gradient-to-tr from-orange-500/20 to-blue-500/20 group-hover:opacity-0 transition-opacity duration-500"/>
 
                             {/* Placeholder for actual images - replace with your actual image paths */}
-                            <div className="w-full h-full bg-zinc-100 flex items-center justify-center">
-                                <span className="text-zinc-400 text-lg">Step {step.number} Image</span>
-                            </div>
+                            {/*<div className="w-full h-full bg-zinc-100 flex items-center justify-center">*/}
+                            {/*    <span className="text-zinc-400 text-lg">Step {step.number} Image</span>*/}
+                            {/*</div>*/}
 
                             {/* Uncomment this when you have the actual images */}
-                            {/*<Image*/}
-                            {/*    src={step.image}*/}
-                            {/*    alt={step.title}*/}
-                            {/*    fill*/}
-                            {/*    className="object-cover transition-transform duration-700 group-hover:scale-105"*/}
-                            {/*/>*/}
+                            <Image
+                                src={step.image}
+                                alt={step.title}
+                                fill
+                                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
                         </div>
                     </div>
 
