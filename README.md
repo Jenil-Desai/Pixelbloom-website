@@ -60,13 +60,64 @@ users, reviewing content, and accessing cross-platform data analytics.
 
 ## 🚀 Getting Started
 
-To be added by the project owner.
+1. Download Node.js
+2. Download PostgreSQL & Setup Database
+3. Download IDE (e.g., Visual Studio Code)
+4. Create Account On [Clerk](https://clerk.dev/)
+5. Create Account On [Cloudflare R2](https://www.cloudflare.com/products/r2/)
 
 ---
 
 ## ⚙️ Setup
 
-To be added by the project owner.
+1. Clone The Repository
+    ```bash
+    git clone https://github.com/Jenil-Desai/Pixelbloom-website.git
+    ```
+
+2. Navigate to the project directory
+    ```bash
+    cd Pixelbloom-website
+    ```
+
+3. Install dependencies
+    ```bash
+    bun install
+    ```
+
+4. Create a `.env` file in the root directory and add the following environment variables:
+    ```dotenv
+      # Databse Environment Variables
+      DATABASE_URL="postgresql://postgres:password@localhost:5432/pixelbloom?connection_limit=1"
+
+      # Clerk settings Environment Variables
+      NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+      NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+      NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/
+      NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/
+
+      # Clerk Environment Variables
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=""
+      CLERK_SECRET_KEY=""
+      SIGNING_SECRET=""
+
+      # Cloudflare R2 Environment Variables
+      TOKEN_VALUE=""
+      BUCKET_NAME=""
+      ACCOUNT_ID=""
+      ACCESS_KEY_ID=""
+      SECRET_ACCESS_KEY=""
+    ```
+
+5. Run the Prisma migration to set up the database
+    ```bash
+    bunx prisma migrate dev --name init
+    ```
+
+6. Run the development server
+    ```bash
+    bun dev
+    ```
 
 ---
 
@@ -90,7 +141,9 @@ To be added by the project owner.
 
 ## 📸 Demo & Screenshots
 
-To be added by the project owner.
+| Mockup                              | Home Page                                 | Admin Dashboard Page                                       | Artists List Page                                    | User List Page                                  | Wallpaper List Page                                          | Wallpaper Upload Page                                        | Accounts Page                                |
+|-------------------------------------|-------------------------------------------|------------------------------------------------------------|------------------------------------------------------|-------------------------------------------------|--------------------------------------------------------------|--------------------------------------------------------------|----------------------------------------------|
+| ![Mockup](./screenshots/Mockup.png) | ![Home Page](./screenshots/HomePage.jpeg) | ![Admin Dashboard Page](./screenshots/AdminDashboard.jpeg) | ![Artists List Page](./screenshots/ArtistsList.jpeg) | ![User List Page](./screenshots/UsersList.jpeg) | ![Wallpaper List Page](./screenshots/WallpapersListing.jpeg) | ![Wallpaper Upload Page](./screenshots/UploadWallpaper.jpeg) | ![Accounts Page](./screenshots/Account.jpeg) |
 
 ---
 
