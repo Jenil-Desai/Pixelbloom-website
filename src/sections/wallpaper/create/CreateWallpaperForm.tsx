@@ -37,8 +37,6 @@ export default function CreateWallpaperForm() {
     });
 
     const onSubmit = async (submitedData: CreateWallpaperInput) => {
-        const formData = new FormData();
-
         if (!uploadFile) {
             toast.error("Error", {
                 description: "Please select a file to upload",
@@ -47,12 +45,7 @@ export default function CreateWallpaperForm() {
             return;
         }
 
-        formData.set("title", submitedData.title);
-        formData.set("platform", submitedData.platform);
-        formData.set("categoriesId", submitedData.categoriesId);
-        formData.set("file", uploadFile);
-
-        const res = await uploadWallpaper(formData);
+        const res = await uploadWallpaper({data: submitedData, file: uploadFile});
 
         if (res.success) {
             toast.success("Success", {
